@@ -40,9 +40,9 @@ env/
 .DS_Store
 Thumbs.db
 
-# Large data files (optional - remove if you want to include them)
-# react_docs_chunks.json
-# react_docs_raw.json
+# Large data files
+react_docs_chunks.json
+react_docs_raw.json
 
 # Logs
 *.log
