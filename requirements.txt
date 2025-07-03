@@ -6,4 +6,7 @@ python-dotenv==1.0.0
 requests==2.31.0
 beautifulsoup4==4.12.2
 lxml==4.9.3
-flask==2.3.3 
+flask==2.3.3
+rank_bm25
+transformers
+torch 

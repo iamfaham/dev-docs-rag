@@ -47,6 +47,10 @@ react_docs_raw.json
 # Logs
 *.log
 
+# Test files
+test_rag.py
+test_app.py
+
 # Temporary files
 *.tmp
 *.temp 
