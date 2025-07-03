@@ -1,5 +1,9 @@
+import os
 import gradio as gr
 from rag_pipeline import rag_chain  # reuse from Step 3 in rag_pipeline.py
+
+# Check if running on Hugging Face Spaces
+IS_HF_SPACES = os.getenv("SPACE_ID") is not None
 
 
 def chat_with_rag(message, history):
@@ -170,9 +174,6 @@ with gr.Blocks(
 
 if __name__ == "__main__":
     demo.launch(
-        server_name="127.0.0.1",  # Allow external access
-        server_port=7860,
-        share=False,  # Set to True if you want a public link
-        debug=True,  # Enable debug mode for better error messages
-        show_error=True,
+        debug=False,  # Disable debug mode for production
+        show_error=True,  # Keep error display for users
     )
