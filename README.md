@@ -199,7 +199,7 @@ python -c "import torch; print(torch.cuda.is_available())"
 
 ---
 
-`Note - This can work with other (crawlable) websites as well, but is optimised for developer documentations specifically.`
+`Note - This system can work with other (crawlable) websites as well, but is optimised for developer documentations specifically.`
 
 ---
 
