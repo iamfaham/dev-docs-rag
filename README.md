@@ -50,6 +50,8 @@ APPWRITE_BUCKET_ID=your_bucket_id
 
 ### 3. Process Documentation
 
+We have 2 options because one is easier to run on local and other one is easier to run on a server.
+
 **Option A: Complete Pipeline (Recommended)**
 
 ```bash
@@ -112,19 +114,6 @@ Documentation URL → Crawl → Chunk → Embed → Store → Chat Interface
 - **Force Reprocess**: Reprocess existing documentation
 - **URL Filtering**: Filter results by documentation source
 - **Status Tracking**: Database-backed completion tracking
-
-## 📚 Supported Documentation
-
-Works with any documentation website! Popular examples:
-
-- [React](https://react.dev/learn)
-- [Python](https://docs.python.org/3/)
-- [Vue.js](https://vuejs.org/guide/)
-- [Node.js](https://nodejs.org/en/docs/)
-- [Django](https://docs.djangoproject.com/en/stable/)
-- [FastAPI](https://fastapi.tiangolo.com/)
-- [Docker](https://docs.docker.com/)
-- [Kubernetes](https://kubernetes.io/docs/)
 
 ## 🔍 Advanced Usage
 
