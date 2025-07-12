@@ -1,4 +1,4 @@
-# 🤖 Documentation RAG Assistant
+# 🤖 Developer Documentation RAG Assistant
 
 A powerful Retrieval-Augmented Generation (RAG) system that transforms any developer documentation into an intelligent Q&A assistant. Built with GPU acceleration, hybrid retrieval, and modern NLP techniques.
 
