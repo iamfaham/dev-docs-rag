@@ -13,4 +13,7 @@ transformers
 sentence-transformers
 torch
 numpy
-scikit-learn 
+scikit-learn
+appwrite
+aiohttp
+pinecone-client 

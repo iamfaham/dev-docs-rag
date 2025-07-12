@@ -40,16 +40,26 @@ env/
 .DS_Store
 Thumbs.db
 
-# Large data files
-react_docs_chunks.json
-react_docs_raw.json
+# Large data files - all documentation JSON files (stored in Appwrite bucket only)
+*_docs_raw.json
+*_docs_chunks.json
 
 # Logs
 *.log
 
 # Test files
-test_rag.py
-test_app.py
+test_file_handling.py
+test_generic_system.py
+test_env.py
+test_storage.py
+manage_appwrite.py
+test_embedding_fix.py
+demo_smart_caching.py
+demo_performance.py
+test_performance_optimization.py
+test_cloud_only_storage.py
+test_url_validation.py
+test_startup_fix.py
 
 # Temporary files
 *.tmp

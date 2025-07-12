@@ -1,182 +1,213 @@
-# React Documentation RAG System
+# 🤖 Documentation RAG Assistant
 
-A Retrieval-Augmented Generation (RAG) system that provides intelligent answers to React-related questions using the official React documentation.
+A powerful Retrieval-Augmented Generation (RAG) system that transforms any developer documentation into an intelligent Q&A assistant. Built with GPU acceleration, hybrid retrieval, and modern NLP techniques.
 
-## 🚀 Live Demo
+## 🎯 What It Does
 
-**Try the live demo on Hugging Face Spaces:** [React Docs Assistant](https://huggingface.co/spaces/YOUR_USERNAME/react-docs-rag)
+Transform documentation websites into intelligent chatbots that can answer questions about the content. Simply provide a documentation URL (like React docs, Python docs, etc.), and the system will:
 
-## Features
+1. **Crawl** the documentation website
+2. **Process** content into searchable chunks
+3. **Generate** vector embeddings with GPU acceleration
+4. **Store** everything in a vector database
+5. **Provide** a chat interface for Q&A
 
-- **Web Scraping**: Automatically crawls React documentation
-- **Document Chunking**: Splits documentation into searchable chunks
-- **Vector Embeddings**: Uses Hugging Face embeddings for semantic search
-- **Pinecone Vector Store**: Stores and retrieves document embeddings
-- **OpenRouter Integration**: Uses various LLM models for answer generation
-- **Interactive Web Interface**: Beautiful Gradio interface with send button
-- **Command Line Interface**: For direct question asking
+## ✨ Key Features
 
-## Project Structure
+- 🚀 **GPU Acceleration** - 3-5x faster processing with automatic CUDA detection
+- 🧠 **Hybrid Retrieval** - Combines dense vectors (Pinecone) + sparse search (BM25) + re-ranking
+- 📚 **Universal Support** - Works with any documentation website
+- ⚡ **Smart Caching** - Processes once, use forever
+- 🎨 **Clean Interface** - Modern Gradio web UI
+- 🔧 **Flexible Usage** - Web interface, Python API, or Jupyter notebook
 
+## 🚀 Quick Start
+
+### 1. Clone & Install
+
+```bash
+git clone https://github.com/yourusername/dev-docs-rag.git
+cd dev-docs-rag
+pip install -r requirements.txt
 ```
-dev-docs-rag/
-├── crawl_docs.py          # Web scraper for React docs
-├── chunk_docs.py          # Document chunking utility
-├── embed_upload.py        # Embedding generation and upload
-├── rag_pipeline.py        # Main RAG pipeline
-├── app.py                 # Gradio web interface
-├── requirements.txt       # Python dependencies
-└── README.md             # This file
-```
 
-## Setup
-
-### 1. Environment Variables
+### 2. Set Up Environment
 
 Create a `.env` file with your API keys:
 
-```bash
+```env
 PINECONE_API_KEY=your_pinecone_api_key
 PINECONE_INDEX=your_pinecone_index_name
 OPENROUTER_API_KEY=your_openrouter_api_key
 OPENROUTER_MODEL=anthropic/claude-3.5-sonnet
+APPWRITE_ENDPOINT=your_appwrite_endpoint
+APPWRITE_PROJECT_ID=your_project_id
+APPWRITE_API_KEY=your_api_key
+APPWRITE_DATABASE_ID=your_database_id
+APPWRITE_COLLECTION_ID=your_collection_id
+APPWRITE_BUCKET_ID=your_bucket_id
 ```
 
-### 2. Install Dependencies
+### 3. Process Documentation
+
+**Option A: Complete Pipeline (Recommended)**
 
 ```bash
-pip install -r requirements.txt
+python run_pipeline.py
+# Follow the interactive prompts
 ```
 
-### 3. Initialize Vector Store
+**Option B: Jupyter Notebook**
 
 ```bash
-# Step 1: Crawl React documentation
-python crawl_docs.py
-
-# Step 2: Chunk the documents
-python chunk_docs.py
-
-# Step 3: Generate embeddings and upload to Pinecone
-python embed_upload.py
+jupyter notebook documentation_pipeline.ipynb
 ```
 
-## Usage
+### 4. Start Chatting
 
-### Web Interface (Recommended)
+Once processing is complete, launch the web interface to ask questions:
 
 ```bash
 python app.py
+# Open http://localhost:7860
 ```
 
-Access the web interface at `http://localhost:7860`
+## 🛠️ How It Works
 
-### Command Line Interface
+```
+Documentation URL → Crawl → Chunk → Embed → Store → Chat Interface
+```
+
+1. **Crawl**: Extracts content from documentation websites
+2. **Chunk**: Splits content into manageable pieces with overlap
+3. **Embed**: Generates vector embeddings (GPU-accelerated)
+4. **Store**: Saves to Pinecone vector database + Appwrite storage
+5. **Retrieve**: Hybrid search (vector + keyword + re-ranking)
+6. **Generate**: LLM creates answers with retrieved context
+
+## 📋 Requirements
+
+### Services Needed
+
+- **Pinecone** - Vector database (free tier available)
+- **OpenRouter** - LLM API access (pay-per-use)
+- **Appwrite** - Storage and database (free tier available)
+
+### Hardware
+
+- **GPU**: NVIDIA GPU recommended (falls back to CPU)
+- **RAM**: 8GB+ for large documentation sets
+- **Storage**: Minimal (data stored in cloud)
+
+## 🔧 Configuration
+
+### GPU Settings
+
+- **Batch Size**: 200 (default), increase for better GPUs
+- **Auto-detection**: Automatically uses GPU if available
+- **Memory Management**: Automatic cache clearing
+
+### Processing Options
+
+- **Force Reprocess**: Reprocess existing documentation
+- **URL Filtering**: Filter results by documentation source
+- **Status Tracking**: Database-backed completion tracking
+
+## 📚 Supported Documentation
+
+Works with any documentation website! Popular examples:
+
+- [React](https://react.dev/learn)
+- [Python](https://docs.python.org/3/)
+- [Vue.js](https://vuejs.org/guide/)
+- [Node.js](https://nodejs.org/en/docs/)
+- [Django](https://docs.djangoproject.com/en/stable/)
+- [FastAPI](https://fastapi.tiangolo.com/)
+- [Docker](https://docs.docker.com/)
+- [Kubernetes](https://kubernetes.io/docs/)
+
+## 🔍 Advanced Usage
+
+### Manual Step-by-Step Processing
 
 ```bash
-python rag_pipeline.py
+python crawl_docs.py https://react.dev/learn
+python chunk_docs.py https://react.dev/learn
+python embed_upload.py https://react.dev/learn 200 true
 ```
 
-This will start an interactive session where you can ask questions about React.
+### Python API
 
-## Deployment
+```python
+from embed_upload import embed_and_upload_chunks
+from rag_pipeline import process_question_with_relevance_check
 
-### Hugging Face Spaces
+# Process documentation
+embed_and_upload_chunks("https://react.dev/learn", batch_size=200, use_gpu=True)
 
-This project is configured for easy deployment on Hugging Face Spaces:
+# Ask questions
+answer = process_question_with_relevance_check(
+    "How do React hooks work?",
+    selected_url="https://react.dev/learn"
+)
+```
 
-1. **Fork this repository** to your GitHub account
-2. **Go to [Hugging Face Spaces](https://huggingface.co/spaces)**
-3. **Click "Create new Space"**
-4. **Choose "Gradio" as the SDK**
-5. **Connect your GitHub repository**
-6. **Set environment variables** in the Space settings:
-   - `PINECONE_API_KEY`
-   - `PINECONE_INDEX`
-   - `OPENROUTER_API_KEY`
-   - `OPENROUTER_MODEL`
-7. **Deploy!** The Space will automatically build and deploy your app
+## 🏗️ Project Structure
 
-### Required Files for HF Spaces
+```
+dev-docs-rag/
+├── app.py                          # Web chat interface
+├── run_pipeline.py                 # Complete pipeline
+├── documentation_pipeline.ipynb    # Jupyter notebook
+├── crawl_docs.py                   # Web scraper
+├── chunk_docs.py                   # Document chunking
+├── embed_upload.py                 # GPU-accelerated embedding
+├── rag_pipeline.py                 # RAG with hybrid retrieval
+├── appwrite_service.py             # Database integration
+├── manual_process.py               # Step-by-step processing
+└── requirements.txt                # Dependencies
+```
 
-The following files are already configured for Hugging Face Spaces:
+## 🐛 Troubleshooting
 
-- ✅ `app.py` - Main Gradio application
-- ✅ `requirements.txt` - Python dependencies
-- ✅ `rag_pipeline.py` - RAG pipeline logic
-- ✅ `react_docs_chunks.json` - Document chunks (included in repo)
+**GPU Not Working?**
 
-## Models Used
+```bash
+python -c "import torch; print(torch.cuda.is_available())"
+```
 
-- **Embeddings**: `intfloat/e5-large-v2` (Hugging Face)
-- **LLM**: Configurable via OpenRouter (default: Claude 3.5 Sonnet)
-- **Vector Store**: Pinecone
-- **Re-ranking**: Cross-encoder/ms-marco-MiniLM-L-6-v2
+**Memory Issues?**
 
-## API Endpoints
+- Reduce batch size for smaller GPUs
+- Check GPU memory usage
 
-- `GET /`: Web interface
-- `POST /api/predict`: Gradio API endpoint
+**API Errors?**
 
-## Contributing
+- Verify all API keys in `.env`
+- Check service quotas and limits
+
+**Processing Failures?**
+
+- Ensure documentation URL is accessible
+- Try with `force_reprocess=True`
+
+## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes
-4. Submit a pull request
+4. Test with different documentation sets
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
 
-## Troubleshooting
+## 🙏 Acknowledgments
 
-### Gradio App Issues
+- Built with [Gradio](https://gradio.app/) for the web interface
+- Powered by [Pinecone](https://pinecone.io/) for vector storage
+- Uses [OpenRouter](https://openrouter.ai/) for LLM access
+- Storage provided by [Appwrite](https://appwrite.io/)
 
-#### Output Truncation
+---
 
-If the Gradio app is not showing complete responses:
-
-1. **Check response length**: The app automatically truncates responses longer than 8000 characters
-2. **Increase chat height**: The chat interface has been configured with a 500px height for better visibility
-3. **Scroll through responses**: Long responses are scrollable within the chat interface
-4. **Check browser console**: Look for any JavaScript errors that might affect display
-
-#### Performance Issues
-
-- **Long response times**: The RAG pipeline processes 4 sub-questions, which can take time
-- **Memory usage**: Large responses may consume significant memory
-- **API rate limits**: Check your OpenRouter API usage and limits
-
-#### Gradio Compatibility Issues
-
-If you encounter Gradio parameter errors:
-
-1. **Invalid parameters**: The app has been updated to use only valid Gradio 5.x parameters
-2. **Type warnings**: The chatbot now uses the modern "messages" format
-3. **Version compatibility**: Tested with Gradio 5.35.0
-
-### Common Solutions
-
-1. **Restart the app**: `python app.py`
-2. **Clear browser cache**: Refresh the page or clear browser cache
-3. **Check environment variables**: Ensure all API keys are properly set
-4. **Test with simple questions**: Try basic questions first to verify functionality
-
-### Testing
-
-Run the test script to verify app functionality:
-
-```bash
-python test_app.py
-```
-
-This will test the chat function and show response length information.
-
-## License
-
-MIT License - see LICENSE file for details.
-
-## Notes
-
-- Large JSON files (`react_docs_*.json`) are included for Hugging Face Spaces deployment
-- Environment variables are kept secure and not committed
-- The system uses Pinecone for vector storage, requiring a Pinecone account
-- Responses are limited to 4000 tokens to prevent extremely long outputs
-- The app includes a prominent send button and clear chat functionality
+**⚡ Ready to get started?** Run `python run_pipeline.py` and follow the prompts!
